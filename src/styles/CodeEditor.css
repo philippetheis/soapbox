@@ -120,6 +120,45 @@
   background-color: var(--bg-primary) !important;
 }
 
+/* Temporary highlight effect */
+.code-editor.temporary-highlight {
+  animation: temporaryHighlight 3s ease-out;
+  border: 2px solid var(--error-red);
+  background-color: rgba(241, 76, 76, 0.05);
+}
+
+@keyframes temporaryHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(241, 76, 76, 0.7);
+    border-color: var(--error-red);
+    background-color: rgba(241, 76, 76, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(241, 76, 76, 0.3);
+    border-color: var(--error-red);
+    background-color: rgba(241, 76, 76, 0.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(241, 76, 76, 0);
+    border-color: var(--border-color);
+    background-color: var(--bg-primary);
+  }
+}
+
+/* Spinner animation */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .editor-header {

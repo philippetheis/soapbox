@@ -35,6 +35,7 @@ const App: React.FC = () => {
   const [isResizing, setIsResizing] = useState(false);
 
   const [showScenarioModal, setShowScenarioModal] = useState(false);
+  const [showTemporaryHighlight, setShowTemporaryHighlight] = useState(false);
 
   // Load scenarios from localStorage on mount
   useEffect(() => {
@@ -79,6 +80,9 @@ const App: React.FC = () => {
   const runRequest = async () => {
     if (!appState.selectedScenario) return;
 
+    // Show temporary red highlighting
+    setShowTemporaryHighlight(true);
+
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
 
@@ -99,6 +103,11 @@ const App: React.FC = () => {
         showResolveButton: !response.success && !!appState.selectedScenario?.fixedRequestXml
       }
     }));
+
+    // Remove temporary highlighting after 3 seconds
+    setTimeout(() => {
+      setShowTemporaryHighlight(false);
+    }, 3000);
   };
 
   const resolveScenario = () => {
@@ -266,6 +275,7 @@ const App: React.FC = () => {
             onRun={runRequest}
             onResolve={resolveScenario}
             selectedScenario={appState.selectedScenario}
+            showTemporaryHighlight={showTemporaryHighlight}
           />
         </div>
         

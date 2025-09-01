@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { Play, CheckCircle, AlertCircle, ChevronRight, ChevronDown } from 'lucide-react';
+import { Play, CheckCircle, AlertCircle, ChevronRight, ChevronDown, Loader2 } from 'lucide-react';
 import { SOAPScenario } from '../types';
 import clsx from 'clsx';
 
@@ -13,6 +13,7 @@ interface CodeEditorProps {
   onRun: () => void;
   onResolve: () => void;
   selectedScenario: SOAPScenario | null;
+  showTemporaryHighlight: boolean;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
@@ -23,7 +24,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   isResolved,
   onRun,
   onResolve,
-  selectedScenario
+  selectedScenario,
+  showTemporaryHighlight
 }) => {
   const editorRef = useRef<any>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -33,6 +35,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   };
 
   const getStatusIcon = () => {
+    if (showTemporaryHighlight) {
+      return <Loader2 size={16} className="text-error animate-spin" />;
+    }
     if (isResolved) {
       return <CheckCircle size={16} className="text-success" />;
     }
@@ -43,6 +48,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   };
 
   const getStatusText = () => {
+    if (showTemporaryHighlight) {
+      return 'Running...';
+    }
     if (isResolved) {
       return 'Resolved';
     }
@@ -56,6 +64,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   };
 
   const getStatusColor = () => {
+    if (showTemporaryHighlight) {
+      return 'text-error';
+    }
     if (isResolved) {
       return 'text-success';
     }
@@ -69,7 +80,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   };
 
   return (
-    <div className="code-editor">
+    <div className={clsx('code-editor', { 'temporary-highlight': showTemporaryHighlight })}>
       <div className="editor-header">
         <div className="editor-title">
           <h3>SOAP Request</h3>

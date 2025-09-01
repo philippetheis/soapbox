@@ -2,6 +2,8 @@
 
 SoapBox is an interactive web application designed to help software engineers master SOAP API integration through hands-on training with realistic error scenarios. This comprehensive training platform simulates common integration issues in payment systems and guides users through debugging and resolution processes.
 
+![App Screenshot](assets/soapbox-screenshot.png?raw=true)
+
 ## Features
 
 ### 🎯 Core Functionality
